@@ -8,6 +8,7 @@ import com.jgranados.jsp_app.calc.Operation;
  */
 public class Record {
 
+    private int id;
     private int numero1;
     private int numero2;
     private Operation operacion;
@@ -44,7 +45,12 @@ public class Record {
     public void setResultado(String resultado) {
         this.resultado = resultado;
     }
-    
-    
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -9,28 +9,40 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="/includes/resources.jsp" />
         <title>Calculadora</title>
     </head>
     <body>
-        <form method="POST" action="calculator-servlet">
-            <fieldset>
-                <legend>Calculadora</legend>
-                <label for="number1">Numero 1:</label>
-                <input name="number1" required type="number"/>
-                <br>
-                <label for="number2">Numero 2:</label>
-                <input name="number2" required type="number"/>
-                <br>
-                <label for="operation">Operacion:</label>
-                <select name="operation" required>
-                    <option value="ADD">Suma</option>
-                    <option value="MULTI">Multiplicacion</option>
-                    <option value="GREATER">Obtener Mayor</option>
-                    <option value="POW">Potencia n1^n2</option>
-                    <option value="BINARY">Conversion Binario</option>
-                </select>
-            </fieldset>
-            <button type="submit">Calcular</button>
-        </form>
+        <jsp:include page="/includes/header.jsp" />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="POST" action="calculator-servlet">
+                        <div class="mb-3">
+                            <label for="number1">Numero 1:</label>
+                            <input type="number" class="form-control" id="number1" name="number1" placeholder="Numero 1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="number2">Numero 2:</label>
+                            <input type="number" class="form-control" id="number2" name="number2" placeholder="Numero 2" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="operation">Operacion: </label>
+                            <select name="operation" class="custom-select d-block w-100" id="operation" required>
+                                <option value="ADD">Suma</option>
+                                <option value="MULTI">Multiplicacion</option>
+                                <option value="GREATER">Obtener Mayor</option>
+                                <option value="POW">Potencia n1^n2</option>
+                                <option value="BINARY">Conversion Binaria</option>
+                            </select>
+                        </div>
+                        <hr class="mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Calcular</button>
+                    </form>
+
+                </div>
+            </div>
+            <jsp:include page="/includes/footer.jsp" />
+        </div>
     </body>
 </html>

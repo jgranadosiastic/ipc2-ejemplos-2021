@@ -15,10 +15,10 @@
     boolean hayError = false;*/
 %>
 <%
-   /* result = request.getParameter("result");
+    /* result = request.getParameter("result");
     mensajeError = request.getParameter("mensaje-error");
     hayError = Boolean.valueOf(request.getParameter("hay-error"));*/
-    /*
+ /*
     Calculator calc = new Calculator();
 
     try {
@@ -30,7 +30,7 @@
         mensajeError = e.getMessage();
         hayError = true;
     }
-*/
+     */
     //pageContext.setAttribute("bandera", hayError);
 
 %>
@@ -38,33 +38,41 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="/includes/resources.jsp" />
         <title>Resultado</title>
     </head>
     <body>
-        <h1>Resultado!</h1>
-        
-        <c:if test="${msg.error}">
-            <h2>Hay un error:</h2>
-            <p>${msg.errorMsg}</p>
-        </c:if>
-        <c:if test="${!msg.error}">
-            <h2>El resultado es ${msg.result}</h2>
-        </c:if>
-        
-        <!--
-        
-        <% 
-            //if (mensajeError.length() == 0) {
-        %>
-        <h2>El resultado es <%/*result*/%></h2>
-        <% /*} else {*/%>
-        <h2>Hay un error:</h2>
-        <p><%/*mensajeError */%></p>
-        <%
+        <jsp:include page="/includes/header.jsp" />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Resultado!</h1>
+
+                    <c:if test="${msg.error}">
+                        <h2>Hay un error:</h2>
+                        <p>${msg.errorMsg}</p>
+                    </c:if>
+                    <c:if test="${!msg.error}">
+                        <h2>El resultado es ${msg.result}</h2>
+                    </c:if>
+
+                    <!--
+                    
+                    <%            //if (mensajeError.length() == 0) {
+                    %>
+                    <h2>El resultado es <%/*result*/%></h2>
+                    <% /*} else {*/%>
+                    <h2>Hay un error:</h2>
+                    <p><%/*mensajeError */%></p>
+                    <%
             //}
-        %>
-        
-        -->
-        <a href="index.jsp">Regresar!</a>
+%>
+                    
+                    -->
+                    <a class="btn btn-outline-primary" href="index.jsp">Regresar!</a>
+                </div>
+            </div>
+            <jsp:include page="/includes/footer.jsp" />
+        </div>
     </body>
 </html>
