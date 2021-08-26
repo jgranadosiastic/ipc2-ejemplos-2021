@@ -4,10 +4,15 @@
     Author     : jose
 --%>
 
+<%@page import="com.jgranados.jsp_app.calc.db.Record"%>
 <%@page import="com.jgranados.jsp_app.calc.Operation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="record" class="com.jgranados.jsp_app.calc.db.Record"/>
-<jsp:setProperty name="record" property="*"/>
+<%! 
+    Record record;
+%>
+<%
+    record = (Record) request.getAttribute("record");
+    %>
 <!DOCTYPE html>
 <html>
     <head>

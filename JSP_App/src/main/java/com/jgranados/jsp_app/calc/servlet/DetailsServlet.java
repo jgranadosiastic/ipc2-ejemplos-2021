@@ -45,7 +45,7 @@ public class DetailsServlet extends HttpServlet {
             Optional<Record> record = db.getHistoricalById(id);
             if (record.isPresent()) {
                 request.setAttribute("record", record.get());
-                request.getRequestDispatcher("details.jsp?id=" + id).forward(request, response);
+                navigate(request, response, record.get());
             } else {
                 response.sendRedirect("error.jsp?msg=No existe elemento con ID: " + id);
             }
@@ -80,5 +80,17 @@ public class DetailsServlet extends HttpServlet {
             );
         }
 
+    }
+    
+    private void navigate(HttpServletRequest request, HttpServletResponse response, Record record)
+            throws ServletException, IOException {
+        boolean isEdit = Boolean.valueOf(request.getParameter("edit"));
+        if (isEdit) {
+            request.getRequestDispatcher("edit.jsp?id=" + record.getId())
+                    .forward(request, response);
+        } else {
+            request.getRequestDispatcher("details.jsp?id=" + record.getId())
+                    .forward(request, response);
+        }
     }
 }

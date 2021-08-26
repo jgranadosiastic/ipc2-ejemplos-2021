@@ -67,7 +67,7 @@
                                         <a href='details-servlet?id=${record.id}'>${record.resultado}</a>
                                     </td>
                                     <td>
-                                        <a href="edit.jsp?id=${record.id}&numero1=${record.numero1}&numero2=${record.numero2}&operacion=${record.operacion}&resultado=${record.resultado}" 
+                                        <a href="details-servlet?edit=true&id=${record.id}" 
                                            class="btn btn-lg btn-block btn-outline-primary">
                                             Editar
                                         </a>
