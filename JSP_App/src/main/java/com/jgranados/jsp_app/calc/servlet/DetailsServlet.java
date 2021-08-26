@@ -5,6 +5,9 @@
  */
 package com.jgranados.jsp_app.calc.servlet;
 
+import com.jgranados.jsp_app.calc.Calculator;
+import com.jgranados.jsp_app.calc.CalculatorException;
+import com.jgranados.jsp_app.calc.Operation;
 import com.jgranados.jsp_app.calc.db.DBCalculator;
 import com.jgranados.jsp_app.calc.db.Record;
 import java.io.IOException;
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jose
  */
-@WebServlet(name = "DetailsServlet", urlPatterns = {"/calc/DetailsServlet"})
+@WebServlet(name = "DetailsServlet", urlPatterns = {"/calc/details-servlet"})
 public class DetailsServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,5 +52,33 @@ public class DetailsServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             response.sendRedirect("error.jsp?msg=Id invalido.");
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        DBCalculator dBCalculator = new DBCalculator();
+        Record historico = new Record();
+        Calculator calc = new Calculator();
+        try {
+            calc.setNumber1(request.getParameter("number1"));
+            calc.setNumber2(request.getParameter("number2"));
+
+            historico.setId(Integer.valueOf(request.getParameter("id")));
+            historico.setNumero1(calc.getNumber1());
+            historico.setNumero2(calc.getNumber2());
+            historico.setOperacion(Operation.valueOf(request.getParameter("operation")));
+            historico.setResultado(request.getParameter("result"));
+            
+            dBCalculator.update(historico);
+            response.sendRedirect(
+                    String.format("details-servlet?id=%d", historico.getId())
+            );
+        } catch (CalculatorException | NumberFormatException e) {
+            response.sendRedirect(
+                    String.format("result.jsp?result=&errorMsg=%s&error=true", e.getMessage())
+            );
+        }
+
     }
 }

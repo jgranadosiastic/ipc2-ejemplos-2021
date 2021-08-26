@@ -92,6 +92,26 @@ public class DBCalculator {
 
         return Optional.empty();
     }
+    
+    public void update(Record operationRecord) {
+        try {
+            PreparedStatement update = connection
+                    .prepareStatement(String.format(
+                            "UPDATE %s SET numero1 = ?, numero2 = ?, operacion = ?, resultado = ? WHERE id_historial = ?",
+                            HISTORIAL
+                    ));
+            update.setInt(1, operationRecord.getNumero1());
+            update.setInt(2, operationRecord.getNumero2());
+            update.setString(3, operationRecord.getOperacion().toString());
+            update.setString(4, operationRecord.getResultado());
+            update.setInt(5, operationRecord.getId());
+
+            update.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private Record convertRecord(ResultSet resultSet) throws SQLException {
         Record record = new Record();

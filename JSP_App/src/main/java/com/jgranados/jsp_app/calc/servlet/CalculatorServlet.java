@@ -36,23 +36,23 @@ public class CalculatorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Calculator calc = new Calculator();
-        
+
         String operationParam = request.getParameter("operation");
         try {
             calc.setNumber1(request.getParameter("number1"));
             calc.setNumber2(request.getParameter("number2"));
 
             String result = calc.executeOperation(operationParam);
-            
+
             Record historico = new Record();
             historico.setNumero1(calc.getNumber1());
             historico.setNumero2(calc.getNumber2());
             historico.setOperacion(Operation.valueOf(operationParam));
             historico.setResultado(result);
-            
+
             DBCalculator dBCalculator = new DBCalculator();
             dBCalculator.save(historico);
-            
+
             response.sendRedirect(
                     String.format("result.jsp?result=%s&errorMsg=&error=false", result)
             );
