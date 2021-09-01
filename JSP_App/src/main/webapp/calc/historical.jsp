@@ -64,7 +64,7 @@
                                     <td>${record.numero2}</td>
                                     <td>${record.operacion}</td>
                                     <td>
-                                        <a href='details-servlet?id=${record.id}'>${record.resultado}</a>
+                                        <a href='#' onclick="openDetailsModal('${pageContext.request.contextPath}', ${record.id})">${record.resultado}</a>
                                     </td>
                                     <td>
                                         <a href="details-servlet?edit=true&id=${record.id}" 
@@ -76,20 +76,25 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <%
-                        for (Record record : list) {
-                            out.print("Id:" + record.getId());
-                            out.print("<br />");
-                            out.print("<a href='DetailsServlet?id=" + record.getId() + "'>");
-                            out.print("Resultado: " + record.getResultado());
-                            out.print("<a />");
-                            out.print("<br />");
-                            out.print("<br />");
-                        }
-                    %>
                 </div>
             </div>
             <jsp:include page="/includes/footer.jsp" />
+        </div>
+
+        <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Detalle</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modal-content">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
