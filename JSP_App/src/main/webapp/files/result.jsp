@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Download!</h1>
         <a href="download-servlet?path=<%= request.getParameter("path")%>"> descargar </a>
     </body>
 </html>

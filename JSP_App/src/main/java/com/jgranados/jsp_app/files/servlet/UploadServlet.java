@@ -38,9 +38,10 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Part filePart = request.getPart("datafile");
-        String fileName = filePart.getName();
+        String fileName = filePart.getHeader("Content-type");
         InputStream fileStream = filePart.getInputStream();
         System.out.println(fileName);
+        System.out.println(filePart.getHeader("Content-disposition"));
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(fileStream))) {
             String line = in.readLine();
