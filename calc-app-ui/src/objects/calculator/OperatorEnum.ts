@@ -1,7 +1,7 @@
 export enum OperatorEnum {
-    ADD,
-    MULTI,
-    GREATER,
-    POW,
-    BINARY
+    ADD = "ADD",
+    MULTI = "MULTI",
+    GREATER = "GREATER",
+    POW = "POW",
+    BINARY = "BINARY"
   }
