@@ -25,7 +25,7 @@
     <div class="mb-3">
         <label for="operation">Operacion: </label>
         <select name="operation" class="custom-select d-block w-100" id="operation" required
-        formControlName="operation">
+        formControlName="operator">
             <option [ngValue]="null">Seleccione una opcion...</option>
             <option *ngFor="let option of eOperatorEnum | keyvalue" [ngValue]="option.key">{{option.value}}</option>
           </select>

@@ -1,6 +1,7 @@
+import { Operation } from './../../objects/calculator/Operation';
+import { OperationService } from './../services/operations/operation.service';
 import { OperatorEnum } from './../../objects/calculator/OperatorEnum';
 import { Component, OnInit } from '@angular/core';
-import { Operation } from '../../objects/calculator/Operation';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -15,15 +16,15 @@ export class OperationFormComponent implements OnInit {
   messageFlag: boolean = false;
   operationForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private operationService: OperationService) {
     this.operation = new Operation(0, 0, OperatorEnum.ADD);
    }
 
   ngOnInit(): void {
     this.operationForm = this.formBuilder.group({
-      number1: ["2", Validators.required],
-      number2: ["44", Validators.required],
-      operation: [OperatorEnum.ADD, Validators.required]
+      number1: [null, Validators.required],
+      number2: [null, Validators.required],
+      operator: [null, Validators.required]
     });
   }
 
@@ -36,10 +37,19 @@ export class OperationFormComponent implements OnInit {
     if (this.operationForm.valid) {
       console.log(this.operationForm.value);
       console.log("Enviar los datos al servidor");
-      this.operationForm.reset({
-        "number1": 44,
-        "number2": 55,
-        "operation": OperatorEnum.MULTI
+      this.operationService.createOperation(this.operationForm.value)
+      .subscribe((created: Operation) => {
+        this.operationForm.reset({
+          "number1": null,
+          "number2": null,
+          "operator": null
+        });
+        console.log("created");
+        console.log(created);
+      }, (error: any) => {
+        console.log("hubo un error");
+        console.log(console.error());
+
       });
     }
   }

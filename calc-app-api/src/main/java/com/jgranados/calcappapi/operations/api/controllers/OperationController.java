@@ -1,14 +1,19 @@
 package com.jgranados.calcappapi.operations.api.controllers;
 
+import com.google.gson.Gson;
+import com.jgranados.calcappapi.operations.api.converter.OperationConverter;
+import com.jgranados.calcappapi.operations.api.model.OperationApiModel;
+import com.jgranados.calcappapi.operations.db.DBCalculator;
+import com.jgranados.calcappapi.operations.db.Record;
+import com.jgranados.calcappapi.operations.services.Calculator;
+import com.jgranados.calcappapi.operations.services.Operation;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
@@ -31,7 +36,6 @@ public class OperationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        throw new NotImplementedException();
     }
 
     /**
@@ -54,6 +58,30 @@ public class OperationController extends HttpServlet {
         }
         System.out.println("body:");
         System.out.println(body);
+        OperationConverter converter = new OperationConverter(OperationApiModel.class);
+        
+        OperationApiModel model = converter.fromJson(body);
+        
+        System.out.println("object");
+        System.out.println(model);
+        
+        Calculator calc = new Calculator(model);
+        
+        Record record = new Record();
+        record.setNumero1(model.getNumber1());
+        record.setNumero2(model.getNumber2());
+        record.setOperacion(Operation.valueOf(model.getOperator()));
+        try {
+            record.setResultado(calc.executeOperation(model.getOperator()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        DBCalculator dbCalc = new DBCalculator();
+        dbCalc.save(record);
+        
+        response.getWriter().append(converter.toJson(model));
+        
         
     }
 

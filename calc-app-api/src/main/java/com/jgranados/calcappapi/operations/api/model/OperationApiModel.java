@@ -8,12 +8,12 @@ public class OperationApiModel {
 
     private Integer number1;
     private Integer number2;
-    private String operation;
+    private String operator;
 
-    public OperationApiModel(Integer number1, Integer number2, String operation) {
+    public OperationApiModel(Integer number1, Integer number2, String operator) {
         this.number1 = number1;
         this.number2 = number2;
-        this.operation = operation;
+        this.operator = operator;
     }
 
     public OperationApiModel() {
@@ -35,12 +35,12 @@ public class OperationApiModel {
         this.number2 = number2;
     }
 
-    public String getOperation() {
-        return operation;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setOperation(String operation) {
-        this.operation = operation;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
     
     
