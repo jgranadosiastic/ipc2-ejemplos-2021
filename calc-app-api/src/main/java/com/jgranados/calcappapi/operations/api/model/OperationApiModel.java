@@ -1,5 +1,7 @@
 package com.jgranados.calcappapi.operations.api.model;
 
+import com.jgranados.calcappapi.operations.domain.Operation;
+
 /**
  *
  * @author jose
@@ -8,12 +10,12 @@ public class OperationApiModel {
 
     private Integer number1;
     private Integer number2;
-    private String operator;
+    private Operation operation;
 
-    public OperationApiModel(Integer number1, Integer number2, String operator) {
+    public OperationApiModel(Integer number1, Integer number2, Operation operation) {
         this.number1 = number1;
         this.number2 = number2;
-        this.operator = operator;
+        this.operation = operation;
     }
 
     public OperationApiModel() {
@@ -35,12 +37,12 @@ public class OperationApiModel {
         this.number2 = number2;
     }
 
-    public String getOperator() {
-        return operator;
+    public Operation getOperation() {
+        return operation;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public void setOperation(Operation operation) {
+        this.operation = operation;
     }
     
     

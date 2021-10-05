@@ -1,7 +1,8 @@
 package com.jgranados.calcappapi.operations.db;
 
 
-import com.jgranados.calcappapi.operations.services.Operation;
+import com.jgranados.calcappapi.operations.domain.Historial;
+import com.jgranados.calcappapi.operations.domain.Operation;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,17 +33,17 @@ public class DBCalculator {
         }
     }
 
-    public void save(Record operationRecord) {
+    public void save(Historial historial) {
         try {
             PreparedStatement insert = connection
                     .prepareStatement(String.format(
                             "INSERT INTO %s (numero1, numero2, operacion, resultado) VALUES(?,?,?,?)",
                             HISTORIAL
                     ));
-            insert.setInt(1, operationRecord.getNumero1());
-            insert.setInt(2, operationRecord.getNumero2());
-            insert.setString(3, operationRecord.getOperacion().toString());
-            insert.setString(4, operationRecord.getResultado());
+            insert.setInt(1, historial.getNumero1());
+            insert.setInt(2, historial.getNumero2());
+            insert.setString(3, historial.getOperacion().toString());
+            insert.setString(4, historial.getResultado());
 
             insert.executeUpdate();
 
@@ -60,8 +61,8 @@ public class DBCalculator {
         /// logica para guardar
     }
 
-    public List<Record> getAllHistoricals() {
-        List<Record> list = new ArrayList<>();
+    public List<Historial> getAllHistoricals() {
+        List<Historial> list = new ArrayList<>();
         try {
             PreparedStatement allQuery = connection
                     .prepareStatement("SELECT * FROM " + HISTORIAL);
@@ -77,7 +78,7 @@ public class DBCalculator {
         return list;
     }
 
-    public Optional<Record> getHistoricalById(int id) {
+    public Optional<Historial> getHistoricalById(int id) {
         try {
             PreparedStatement recordQuery = connection
                     .prepareStatement(String.format("SELECT * FROM %s WHERE id_historial = ?", HISTORIAL));
@@ -94,7 +95,7 @@ public class DBCalculator {
         return Optional.empty();
     }
     
-    public void update(Record operationRecord) {
+    public void update(Historial operationRecord) {
         try {
             PreparedStatement update = connection
                     .prepareStatement(String.format(
@@ -105,7 +106,7 @@ public class DBCalculator {
             update.setInt(2, operationRecord.getNumero2());
             update.setString(3, operationRecord.getOperacion().toString());
             update.setString(4, operationRecord.getResultado());
-            update.setInt(5, operationRecord.getId());
+            update.setInt(5, operationRecord.getIdHistorial());
 
             update.executeUpdate();
 
@@ -114,14 +115,14 @@ public class DBCalculator {
         }
     }
 
-    private Record convertRecord(ResultSet resultSet) throws SQLException {
-        Record record = new Record();
-        record.setId(resultSet.getInt("id_historial"));
-        record.setNumero1(resultSet.getInt("numero1"));
-        record.setNumero2(resultSet.getInt("numero2"));
-        record.setOperacion(Operation.valueOf(resultSet.getString("operacion")));
-        record.setResultado(resultSet.getString("resultado"));
+    private Historial convertRecord(ResultSet resultSet) throws SQLException {
+        Historial historial = new Historial();
+        historial.setIdHistorial(resultSet.getInt("id_historial"));
+        historial.setNumero1(resultSet.getInt("numero1"));
+        historial.setNumero2(resultSet.getInt("numero2"));
+        historial.setOperacion(Operation.valueOf(resultSet.getString("operacion")));
+        historial.setResultado(resultSet.getString("resultado"));
 
-        return record;
+        return historial;
     }
 }

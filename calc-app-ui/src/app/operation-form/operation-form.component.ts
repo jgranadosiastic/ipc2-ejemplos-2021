@@ -1,3 +1,4 @@
+import { OperationResponse } from './../../objects/calculator/OperationResponse';
 import { Operation } from './../../objects/calculator/Operation';
 import { OperationService } from './../services/operations/operation.service';
 import { OperatorEnum } from './../../objects/calculator/OperatorEnum';
@@ -13,8 +14,11 @@ export class OperationFormComponent implements OnInit {
 
   operation: Operation;
   eOperatorEnum = OperatorEnum;
-  messageFlag: boolean = false;
+  showError: boolean = false;
+  showSuccess: boolean = false;
   operationForm!: FormGroup;
+  message: String = "";
+
 
   constructor(private formBuilder: FormBuilder, private operationService: OperationService) {
     this.operation = new Operation(0, 0, OperatorEnum.ADD);
@@ -24,7 +28,7 @@ export class OperationFormComponent implements OnInit {
     this.operationForm = this.formBuilder.group({
       number1: [null, Validators.required],
       number2: [null, Validators.required],
-      operator: [null, Validators.required]
+      operation: [null, Validators.required]
     });
   }
 
@@ -37,18 +41,27 @@ export class OperationFormComponent implements OnInit {
     if (this.operationForm.valid) {
       console.log(this.operationForm.value);
       console.log("Enviar los datos al servidor");
-      this.operationService.createOperation(this.operationForm.value)
-      .subscribe((created: Operation) => {
+      this.operation.number1 = this.operationForm.value.number1;
+      this.operation.number2 = this.operationForm.value.number2;
+      this.operation.operation = this.operationForm.value.operation;
+      this.operationService.createOperation(this.operation)
+      .subscribe((created: OperationResponse) => {
         this.operationForm.reset({
           "number1": null,
           "number2": null,
-          "operator": null
+          "operation": null
         });
         console.log("created");
         console.log(created);
+        this.showError = false;
+        this.showSuccess = true;
+        this.message = "El resultado es " + created.result;
       }, (error: any) => {
         console.log("hubo un error");
-        console.log(console.error());
+        console.log(error);
+        this.showError = true;
+        this.message = error.error.message;
+
 
       });
     }

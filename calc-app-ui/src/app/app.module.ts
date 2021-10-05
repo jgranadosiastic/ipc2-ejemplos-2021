@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { OperationFormComponent } from './operation-form/operation-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MainComponent } from './main-component/main.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    OperationFormComponent
+    OperationFormComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

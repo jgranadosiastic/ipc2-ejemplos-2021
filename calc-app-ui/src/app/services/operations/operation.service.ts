@@ -1,3 +1,4 @@
+import { OperationResponse } from './../../../objects/calculator/OperationResponse';
 import { Operation } from '../../../objects/calculator/Operation';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
@@ -12,7 +13,7 @@ export class OperationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public createOperation(operation: Operation): Observable<Operation> {
-    return this.httpClient.post<Operation>(this.API_URL + "operations", operation);
+  public createOperation(operation: Operation): Observable<OperationResponse> {
+    return this.httpClient.post<OperationResponse>(this.API_URL + "operations", operation);
   }
 }

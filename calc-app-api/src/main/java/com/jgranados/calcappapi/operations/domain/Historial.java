@@ -1,16 +1,12 @@
-package com.jgranados.calcappapi.operations.db;
-
-import com.jgranados.calcappapi.operations.services.Operation;
-
-
+package com.jgranados.calcappapi.operations.domain;
 
 /**
  *
  * @author jose
  */
-public class Record {
+public class Historial {
 
-    private int id;
+    private int idHistorial;
     private int numero1;
     private int numero2;
     private Operation operacion;
@@ -48,11 +44,11 @@ public class Record {
         this.resultado = resultado;
     }
 
-    public int getId() {
-        return id;
+    public int getIdHistorial() {
+        return idHistorial;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdHistorial(int idHistorial) {
+        this.idHistorial = idHistorial;
     }
 }

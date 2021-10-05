@@ -1,12 +1,15 @@
 package com.jgranados.calcappapi.operations.api.controllers;
 
-import com.google.gson.Gson;
+import com.jgranados.calcappapi.operations.api.converter.BackendErrorModelConverter;
 import com.jgranados.calcappapi.operations.api.converter.OperationConverter;
+import com.jgranados.calcappapi.operations.api.converter.OperationResponseConverter;
+import com.jgranados.calcappapi.operations.api.model.BackendErrorModel;
 import com.jgranados.calcappapi.operations.api.model.OperationApiModel;
+import com.jgranados.calcappapi.operations.api.model.OperationApiResponseModel;
 import com.jgranados.calcappapi.operations.db.DBCalculator;
-import com.jgranados.calcappapi.operations.db.Record;
+import com.jgranados.calcappapi.operations.domain.Historial;
 import com.jgranados.calcappapi.operations.services.Calculator;
-import com.jgranados.calcappapi.operations.services.Operation;
+import com.jgranados.calcappapi.operations.services.CalculatorException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -21,8 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "OperationController", urlPatterns = {"/operations"})
 public class OperationController extends HttpServlet {
-
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -50,39 +51,48 @@ public class OperationController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BufferedReader reader = request.getReader();
+
+        // -- esto se repite, asi que alguien mas se encargue de leer el body.
         String body = "";
         String line = reader.readLine();
         while (line != null) {
             body = body + line;
-            line  = reader.readLine();
+            line = reader.readLine();
         }
         System.out.println("body:");
         System.out.println(body);
+        
+        // --
+
         OperationConverter converter = new OperationConverter(OperationApiModel.class);
-        
         OperationApiModel model = converter.fromJson(body);
-        
-        System.out.println("object");
-        System.out.println(model);
-        
-        Calculator calc = new Calculator(model);
-        
-        Record record = new Record();
-        record.setNumero1(model.getNumber1());
-        record.setNumero2(model.getNumber2());
-        record.setOperacion(Operation.valueOf(model.getOperator()));
+
+        Calculator calc = new Calculator(model, new DBCalculator());
+
         try {
-            record.setResultado(calc.executeOperation(model.getOperator()));
+            Historial historial = calc.executeOperationAndSaveHistorial();
+            OperationResponseConverter converterResp = new OperationResponseConverter(OperationApiResponseModel.class);
+
+            OperationApiResponseModel responseModel = new OperationApiResponseModel(historial.getIdHistorial(), historial.getResultado());
+
+            response.getWriter().append(converterResp.toJson(responseModel));
+            
+        } catch (CalculatorException e) {
+            BackendErrorModelConverter errorConverter = new BackendErrorModelConverter(BackendErrorModel.class);
+            BackendErrorModel errorModel = new BackendErrorModel(e.getMessage());
+            
+            response.getWriter().append(errorConverter.toJson(errorModel));
+            response.setStatus(response.SC_BAD_REQUEST);
+            e.printStackTrace();
         } catch (Exception e) {
+            BackendErrorModelConverter errorConverter = new BackendErrorModelConverter(BackendErrorModel.class);
+            BackendErrorModel errorModel = new BackendErrorModel(e.getMessage());
+            
+            response.getWriter().append(errorConverter.toJson(errorModel));
+            response.setStatus(response.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }
-        
-        DBCalculator dbCalc = new DBCalculator();
-        dbCalc.save(record);
-        
-        response.getWriter().append(converter.toJson(model));
-        
-        
+
     }
 
 }

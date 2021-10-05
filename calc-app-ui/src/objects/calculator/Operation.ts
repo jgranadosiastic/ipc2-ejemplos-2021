@@ -1,38 +1,38 @@
 import { OperatorEnum } from "./OperatorEnum";
 
 export class Operation {
-    _number1: number;
-    _number2: number;
-    _operator: OperatorEnum;
+    number1: number;
+    number2: number;
+    operation: OperatorEnum;
 
-    constructor(number1: number, number2: number, operator: OperatorEnum) {
-        this._number1 = number1;
-        this._number2 = number2;
-        this._operator = operator;
+    constructor(number1: number, number2: number, operation: OperatorEnum) {
+        this.number1 = number1;
+        this.number2 = number2;
+        this.operation = operation;
     }
 
-    get number1() {
-        return this._number1;
+    get getNumber1() {
+        return this.number1;
     }
 
-    set number1(number1: number) {
-        this._number1 = number1;
+    set setNumber1(number1: number) {
+        this.number1 = number1;
     }
 
-    get number2() {
-        return this._number2;
+    get getNumber2() {
+        return this.number2;
     }
 
-    set number2(number2: number) {
-        this._number2 = number2;
+    set setNumber2(number2: number) {
+        this.number2 = number2;
     }
     
-    get operator() {
-        return this._operator;
+    get getOperation() {
+        return this.operation;
     }
 
-    set operator(operator: OperatorEnum) {
-        this._operator = operator;
+    set setOperation(operation: OperatorEnum) {
+        this.operation = operation;
     }
 
    

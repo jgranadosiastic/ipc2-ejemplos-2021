@@ -1,4 +1,4 @@
-package com.jgranados.calcappapi.operations.services;
+package com.jgranados.calcappapi.operations.domain;
 
 /**
  *

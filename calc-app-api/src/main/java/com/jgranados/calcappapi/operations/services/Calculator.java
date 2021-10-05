@@ -1,6 +1,8 @@
 package com.jgranados.calcappapi.operations.services;
 
 import com.jgranados.calcappapi.operations.api.model.OperationApiModel;
+import com.jgranados.calcappapi.operations.db.DBCalculator;
+import com.jgranados.calcappapi.operations.domain.Historial;
 
 /**
  *
@@ -8,42 +10,17 @@ import com.jgranados.calcappapi.operations.api.model.OperationApiModel;
  */
 public class Calculator {
 
-    private int number1;
-    private int number2;
+    private OperationApiModel apiModel;
+    private DBCalculator dbCalculator;
     
-    public Calculator(OperationApiModel apiModel) {
-        this.number1 = apiModel.getNumber1();
-        this.number2 = apiModel.getNumber2();
-    }
-
-    public int getNumber1() {
-        return number1;
-    }
-
-    public void setNumber1(String number1) throws CalculatorException {
-        try {
-            this.number1 = Integer.valueOf(number1);
-        } catch (NumberFormatException e) {
-            throw new CalculatorException("El valor del numero 1 es incorrecto");
-        }
-    }
-
-    public int getNumber2() {
-        return number2;
-    }
-
-    public void setNumber2(String number2) throws CalculatorException {
-        try {
-            this.number2 = Integer.valueOf(number2);
-        } catch (NumberFormatException e) {
-            throw new CalculatorException("El valor del numero 2 es incorrecto");
-        }
+    public Calculator(OperationApiModel apiModel, DBCalculator dbCalculator) {
+        this.apiModel = apiModel;
+        this.dbCalculator = dbCalculator;
     }
     
-    public String executeOperation(String operationStr) throws CalculatorException {
+    public String executeOperation() throws CalculatorException {
         try {
-            Operation operation = Operation.valueOf(operationStr);
-            switch (operation) {
+            switch (apiModel.getOperation()) {
                 case ADD:
                     return String.valueOf(add());
                 case MULTI:
@@ -55,34 +32,46 @@ public class Calculator {
                 case BINARY:
                     return String.valueOf(convertBinary());
                 default:
-                    throw new CalculatorException("No se reconoce la operacion: " + operationStr);
+                    throw new CalculatorException("No se reconoce la operacion: " + apiModel.getOperation());
             }
             
             
         } catch (IllegalArgumentException e) {
-            throw new CalculatorException("No se reconoce la operacion: " + operationStr);
+            throw new CalculatorException("No se reconoce la operacion: " + apiModel.getOperation());
         } catch (NullPointerException e) {
             throw new CalculatorException("No se permite dejar en blanco la operacion");
         }
     }
     
+    public Historial executeOperationAndSaveHistorial() throws CalculatorException {
+        Historial newHistorial = new Historial();
+        newHistorial.setNumero1(apiModel.getNumber1());
+        newHistorial.setNumero2(apiModel.getNumber2());
+        newHistorial.setOperacion(apiModel.getOperation());
+        newHistorial.setResultado(executeOperation());
+        
+        dbCalculator.save(newHistorial);
+        
+        return newHistorial;
+    }
+    
     private int add() {
-        return number1 + number2;
+        return apiModel.getNumber1() + apiModel.getNumber2();
     }
     
     private int multi() {
-        return number1 * number2;
+        return apiModel.getNumber1() * apiModel.getNumber2();
     }
     
     private int getGreater() {
-        return number1 >= number2 ? number1 : number2;
+        return apiModel.getNumber1() >= apiModel.getNumber2() ? apiModel.getNumber1() : apiModel.getNumber2();
     }
     
     private double pow() {
-        return Math.pow(number1, number2);
+        return Math.pow(apiModel.getNumber1(), apiModel.getNumber2());
     }
     
     private String convertBinary() {
-        return Integer.toBinaryString(number1) + ", " + Integer.toBinaryString(number2);
+        return Integer.toBinaryString(apiModel.getNumber1()) + ", " + Integer.toBinaryString(apiModel.getNumber2());
     }
 }
