@@ -9,6 +9,9 @@ import { OperationFormComponent } from './operation-form/operation-form.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MainComponent } from './main-component/main.component';
+import { HistorialDashboardComponent } from './historial-dashboard/historial-dashboard.component';
+import { HistorialContainerComponent } from './historial-container/historial-container.component';
+import { HistorialCardComponent } from './historial-card/historial-card.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { MainComponent } from './main-component/main.component';
     HeaderComponent,
     FooterComponent,
     OperationFormComponent,
-    MainComponent
+    MainComponent,
+    HistorialDashboardComponent,
+    HistorialContainerComponent,
+    HistorialCardComponent
   ],
   imports: [
     BrowserModule,
