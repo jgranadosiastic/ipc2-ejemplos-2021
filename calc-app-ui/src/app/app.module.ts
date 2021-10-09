@@ -12,6 +12,8 @@ import { MainComponent } from './main-component/main.component';
 import { HistorialDashboardComponent } from './historial-dashboard/historial-dashboard.component';
 import { HistorialContainerComponent } from './historial-container/historial-container.component';
 import { HistorialCardComponent } from './historial-card/historial-card.component';
+import { HistorialTableComponent } from './historial-table/historial-table.component';
+import { FilesComponent } from './files/files.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { HistorialCardComponent } from './historial-card/historial-card.componen
     MainComponent,
     HistorialDashboardComponent,
     HistorialContainerComponent,
-    HistorialCardComponent
+    HistorialCardComponent,
+    HistorialTableComponent,
+    FilesComponent
   ],
   imports: [
     BrowserModule,

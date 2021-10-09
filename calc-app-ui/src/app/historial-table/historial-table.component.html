@@ -1,0 +1,37 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Numero 1</th>
+            <th scope="col">Numero 2</th>
+            <th scope="col">Operación</th>
+            <th scope="col">Resultado</th>
+            <th scope="col"> &nbsp; </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let historial of listadoHistorial">
+            <th scope="row">{{ historial.idHistorial }}</th>
+            <td>{{ historial.numero1 }}</td>
+            <td>{{ historial.numero2 }}</td>
+            <td>{{ historial.operacion }}</td>
+            <td>
+              <a href="#">{{ historial.resultado }}</a>
+            </td>
+            <td>
+              <a href="#" class="btn btn-lg btn-block btn-outline-primary">
+                Editar
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

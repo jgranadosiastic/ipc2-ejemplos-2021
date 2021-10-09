@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   public urls: string[];
 
   constructor() {
-    this.urls = ["/", "http://google.com"];
+    this.urls = ["/", "/historial-dashboard", "/historial-table", "/files"];
    }
 
   ngOnInit(): void {

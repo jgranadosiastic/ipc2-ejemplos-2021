@@ -1,5 +1,6 @@
 package com.jgranados.calcappapi.operations.api.controllers;
 
+import com.google.gson.Gson;
 import com.jgranados.calcappapi.operations.api.converter.BackendErrorModelConverter;
 import com.jgranados.calcappapi.operations.api.converter.OperationConverter;
 import com.jgranados.calcappapi.operations.api.converter.OperationResponseConverter;
@@ -12,6 +13,7 @@ import com.jgranados.calcappapi.operations.services.Calculator;
 import com.jgranados.calcappapi.operations.services.CalculatorException;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +39,20 @@ public class OperationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            DBCalculator dbCalc = new DBCalculator();
+            List<Historial> all = dbCalc.getAllHistoricals();
+            Gson s = new Gson();
+            response.getWriter().append(s.toJson(all));
+            
+        } catch (Exception e) {
+            BackendErrorModelConverter errorConverter = new BackendErrorModelConverter(BackendErrorModel.class);
+            BackendErrorModel errorModel = new BackendErrorModel(e.getMessage());
+            
+            response.getWriter().append(errorConverter.toJson(errorModel));
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -82,14 +98,14 @@ public class OperationController extends HttpServlet {
             BackendErrorModel errorModel = new BackendErrorModel(e.getMessage());
             
             response.getWriter().append(errorConverter.toJson(errorModel));
-            response.setStatus(response.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             e.printStackTrace();
         } catch (Exception e) {
             BackendErrorModelConverter errorConverter = new BackendErrorModelConverter(BackendErrorModel.class);
             BackendErrorModel errorModel = new BackendErrorModel(e.getMessage());
             
             response.getWriter().append(errorConverter.toJson(errorModel));
-            response.setStatus(response.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }
 
