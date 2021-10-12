@@ -21,7 +21,9 @@
             <td>{{ historial.numero2 }}</td>
             <td>{{ historial.operacion }}</td>
             <td>
-              <a href="#">{{ historial.resultado }}</a>
+              <a href="javascript: void(0);" (click)="selectElement(historial)"
+              data-toggle="modal" data-target="#myModal"
+              >{{ historial.resultado }}</a>
             </td>
             <td>
               <a href="#" class="btn btn-lg btn-block btn-outline-primary">
@@ -31,6 +33,7 @@
           </tr>
         </tbody>
       </table>
+      <app-historial-view></app-historial-view>
     </div>
   </div>
   <app-footer></app-footer>

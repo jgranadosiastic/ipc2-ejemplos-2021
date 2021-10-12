@@ -2,7 +2,14 @@
   <h3>{{ message }}</h3>
 </div>
 
-<form [formGroup]="operationForm" (ngSubmit)="crearOperacion()">
+<form [formGroup]="operationForm" (ngSubmit)="submit()">
+  <div class="mb-3" *ngIf="edit">
+    <label for="id">ID:</label>
+    <input
+            id="id" name="id"
+            formControlName="id"
+            readonly>
+  </div>
     <div class="mb-3">
         <label for="number1">Numero 1:</label>
         <input type="number"
@@ -30,6 +37,11 @@
             <option *ngFor="let option of eOperatorEnum | keyvalue" [ngValue]="option.key">{{option.value}}</option>
           </select>
     </div>
+    <div class="mb-3"  *ngIf="edit">
+      <label for="result">Resultado:</label>
+      <input class="form-control" id="result" name="result" placeholder="Resultado" required
+      formControlName="result">
+  </div>
     <hr class="mb-4">
     <button type="submit" [disabled]="operationForm.invalid" class="btn btn-primary btn-lg btn-block">Calcular</button>
 </form>

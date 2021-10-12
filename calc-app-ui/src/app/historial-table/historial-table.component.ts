@@ -22,4 +22,10 @@ export class HistorialTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  selectElement(elementToSelect: Historial): void {
+    this.operationService.emisorDeCambios.emit(
+      elementToSelect
+    );
+  }
+
 }

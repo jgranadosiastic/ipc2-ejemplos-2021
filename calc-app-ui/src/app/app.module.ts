@@ -14,6 +14,7 @@ import { HistorialContainerComponent } from './historial-container/historial-con
 import { HistorialCardComponent } from './historial-card/historial-card.component';
 import { HistorialTableComponent } from './historial-table/historial-table.component';
 import { FilesComponent } from './files/files.component';
+import { HistorialViewComponent } from './historial-view/historial-view.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FilesComponent } from './files/files.component';
     HistorialContainerComponent,
     HistorialCardComponent,
     HistorialTableComponent,
-    FilesComponent
+    FilesComponent,
+    HistorialViewComponent
   ],
   imports: [
     BrowserModule,
