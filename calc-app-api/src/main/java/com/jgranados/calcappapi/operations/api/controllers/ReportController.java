@@ -1,6 +1,7 @@
 package com.jgranados.calcappapi.operations.api.controllers;
 
 import com.jgranados.calcappapi.operations.db.DBConnectionSingleton;
+import com.jgranados.calcappapi.operations.db.DBConnectionSingletonCalculos;
 import com.jgranados.calcappapi.operations.services.ReportService;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -31,7 +32,7 @@ public class ReportController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ReportService reportService = new ReportService(DBConnectionSingleton.getDBConnectionSingleton().getConnection());
+        ReportService reportService = null;
 
         response.setContentType("application/pdf");
         response.setHeader("Content-disposition", "attachment; filename=reporte.pdf");
@@ -40,11 +41,19 @@ public class ReportController extends HttpServlet {
 
         try {
             if (report == null || report.equals("") || report.equals("1")) {
+                reportService = new ReportService(DBConnectionSingletonCalculos.getDBConnectionSingleton().getConnection());
                 reportService.printReport(response.getOutputStream());
             } else if (report.equals("2")) {
+                reportService = new ReportService(DBConnectionSingleton.getDBConnectionSingleton().getConnection());
                 String startDateStr = request.getParameter("start");
                 String endDateStr = request.getParameter("end");
                 reportService.printReportWithParams(response.getOutputStream(), LocalDate.parse(startDateStr), LocalDate.parse(endDateStr));
+            } else if (report.equals("3")) {
+                reportService = new ReportService(DBConnectionSingleton.getDBConnectionSingleton().getConnection());
+               reportService.printReportWithBeans(response.getOutputStream());
+            } else if (report.equals("4")) {
+                reportService = new ReportService(DBConnectionSingleton.getDBConnectionSingleton().getConnection());
+               reportService.printReportWithComplexBeans(response.getOutputStream());
             }
         } catch (IOException | JRException e) {
             // manejar la excepcion
