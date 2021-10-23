@@ -54,6 +54,9 @@ public class ReportController extends HttpServlet {
             } else if (report.equals("4")) {
                 reportService = new ReportService(DBConnectionSingleton.getDBConnectionSingleton().getConnection());
                reportService.printReportWithComplexBeans(response.getOutputStream());
+            } else if (report.equals("5")) {
+                reportService = new ReportService(DBConnectionSingleton.getDBConnectionSingleton().getConnection());
+               reportService.printMasterDetailReportWithComplexBeans(response.getOutputStream());
             }
         } catch (IOException | JRException e) {
             // manejar la excepcion

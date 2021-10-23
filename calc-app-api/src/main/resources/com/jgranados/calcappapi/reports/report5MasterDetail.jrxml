@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5MasterDetail" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="deea369c-f12a-461b-8372-391feea23826">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CursosBeanList"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="codigo" class="java.lang.String">
+		<fieldDescription><![CDATA[codigo]]></fieldDescription>
+	</field>
+	<field name="estudiantes" class="java.util.List">
+		<fieldDescription><![CDATA[estudiantes]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[nombre]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="299" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="560" height="95" backcolor="#4E6AF5" uuid="d9ed95bc-670a-4e89-a48a-32190c96e4ef"/>
+				<staticText>
+					<reportElement x="0" y="10" width="100" height="30" forecolor="#FFFFFF" uuid="9db7f05e-8523-4c14-bea5-46f2b321762e"/>
+					<textElement>
+						<font size="20"/>
+					</textElement>
+					<text><![CDATA[Curso:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="50" width="100" height="30" forecolor="#FFFFFF" uuid="4722ea2d-14a9-4f24-93b3-0935d868b96f"/>
+					<textElement>
+						<font size="20"/>
+					</textElement>
+					<text><![CDATA[Codigo:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="107" y="10" width="432" height="28" forecolor="#FFFFFF" uuid="69d1ef34-5c68-4d76-907e-366f4cb17a3b"/>
+					<textElement>
+						<font size="20"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="110" y="51" width="432" height="28" forecolor="#FFFFFF" uuid="74627a2c-beb7-4944-ba20-f7f5a5dbf33f"/>
+					<textElement>
+						<font size="20"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<subreport>
+				<reportElement x="0" y="95" width="560" height="204" uuid="717bda47-59bb-4f25-99ac-95c7c1081052"/>
+				<subreportParameter name="estudiantes">
+					<subreportParameterExpression><![CDATA[$F{estudiantes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{estudiantes});]]></dataSourceExpression>
+				<subreportExpression><![CDATA["com/jgranados/calcappapi/reports/Report5SubReport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
